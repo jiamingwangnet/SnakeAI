@@ -59,8 +59,8 @@ MainGame::MainGame(GEngine::Game& game)
 	layerInfo{
 		{ 11,     0, &relu},
 		{ 256,   11, &relu},
-		//{ 128,  256, &relu},
-		{   3,  256, &linear}
+		{ 128,  256, &relu},
+		{   3,  128, &linear}
 	},
 	agent{actions, layerInfo, 100000, 0.9998}
 {
