@@ -76,7 +76,7 @@ void MainGame::Init()
 	std::cout << "Save file: ";
 	std::cin >> name;
 	std::ifstream in{ name + ".actvalue", std::ios::binary};
-	if(in.good())agent.Load("", name);
+	if (in.good())agent.Load("", name);
 }
 
 void MainGame::Update()
