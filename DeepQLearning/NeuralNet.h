@@ -79,6 +79,8 @@ namespace dqn
 		void GradientDescent(double learningRate, DataPoint& dataPoint, const Cost<double>& cost);
 		void GradientDescent(double learningRate, std::vector<DataPoint>& batch, const Cost<double>& cost);
 
+		const std::vector<std::unique_ptr<Layer>>& GetLayers() const { return layers; }
+
 	private:
 		void GetGradients(DataPoint& dataPoint, const Cost<double>& cost);
 		DMatrix OutputLayerValues(const DMatrix& costDerivative);

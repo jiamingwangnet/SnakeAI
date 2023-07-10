@@ -83,6 +83,7 @@ namespace dqn
 		void Train();
 		void TrainBatch();
 
+		const NeuralNet& GetActionValueNet() const { return actionValueFunc; }
 	private:
 		void TakeAction(const DMatrix& state);
 		void TakeAction(size_t index);

@@ -5,6 +5,7 @@
 #include "Board.h"
 #include <DeepQLearning/ActivationFuncs.h>
 #include <memory>
+#include "WeightsDisplayer.h"
 
 class MainGame
 {
@@ -20,6 +21,7 @@ public:
 private:
 	GEngine::Game& game;
 	Board board;
+	WeightsDisplayer display;
 
 	dqn::ReLU relu;
 	dqn::Linear linear;

@@ -18,8 +18,8 @@ void Board::Init()
 		{
 			tiles[y * width + x] = game.CreateGameObject<Tile>(
 				GEngine::Vector2{
-					x * (TILE_SIZE + PADDING) - 1280.0f/2.0f + (1280.0f - (TILE_SIZE + PADDING) * width) / 2.0f,
-					y * (TILE_SIZE + PADDING) - 800.0 / 2.0f + (800.0 - (TILE_SIZE + PADDING) * height) / 2.0f
+					x * (TILE_SIZE + PADDING) - 1280.0f/2.0f + (1280.0f - (TILE_SIZE + PADDING) * width) / 2.0f + offsetx,
+					y * (TILE_SIZE + PADDING) - 800.0 / 2.0f + (800.0 - (TILE_SIZE + PADDING) * height) / 2.0f + offsety
 				}, 
 				GEngine::Vector2{ TILE_SIZE, TILE_SIZE }, EMPTY_COLOR);
 		}

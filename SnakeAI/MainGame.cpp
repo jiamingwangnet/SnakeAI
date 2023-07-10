@@ -5,11 +5,9 @@
 
 static constexpr int DELAY = 1;
 static constexpr int VIEW_SIZE = 10;
-static constexpr int PENALTY_DISTANCE = 200; // if the agent stays in one place for too long or travels to far give a negative reward
-static constexpr double PENALTY = -5.0; // the penalty to give
 
 MainGame::MainGame(GEngine::Game& game)
-	: game{ game }, board{ game, 32, 24, 3, DELAY },
+	: game{ game }, board{ game, 32, 24, 3, DELAY }, 
 	actions{
 		// straight
 		[this]() {
@@ -62,7 +60,7 @@ MainGame::MainGame(GEngine::Game& game)
 		{ 128,  256, &relu},
 		{   3,  128, &linear}
 	},
-	agent{actions, layerInfo, 100000, 0.9998}
+	agent{actions, layerInfo, 100000, 0.9998}, display{ game, agent, -620.0f, -250.0f, 2.0f }
 {
 	
 }
@@ -77,6 +75,8 @@ void MainGame::Init()
 	std::cin >> name;
 	std::ifstream in{ name + ".actvalue", std::ios::binary};
 	if (in.good())agent.Load("", name);
+
+	display.Init();
 }
 
 void MainGame::Update()
@@ -91,38 +91,27 @@ void MainGame::Update()
 
 		board.Update();
 
+		display.Update();
+
 		dqn::DMatrix state_1 = board.GetAgentState();
-
-		//double multiplier = 1.0; // multiply reward??
-
-		//double penalty = 0.0; // calculate distance penalty
-		/*if (board.GetTravelledDistance() >= PENALTY_DISTANCE) 
-			penalty = PENALTY;*/
 
 		if (board.GetState() == Board::State::LOSE)
 		{
-			//agent.SampleEnd(state_1, -10.0 + penalty, true);
 			agent.SampleEnd(state_1, -10.0, true);
-			//multiplier = 1.0;
-
-			//agent.TrainBatch();
 		}
 		else
 		{
-			//agent.SampleEnd(state_1, multiplier * 10.0 * ((double)board.GetScore() - prevScore) + penalty, false);
 			agent.SampleEnd(state_1, 10.0 * ((double)board.GetScore() - prevScore), false);
-
-			//multiplier += 0.5;
-
-			//agent.Train();
 		}
-		/*agent.TrainBatch();*/
+
 		agent.Train();
 
 		if (board.GetRounds() % 20 == 0)
 		{
 			agent.Save("", name);
 		}
+
+		
 	}
 	
 

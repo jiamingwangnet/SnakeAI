@@ -36,6 +36,12 @@
     <ClCompile Include="Trainer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WeightsDisplayer.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WeightsDisplayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGame.h">

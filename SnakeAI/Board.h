@@ -146,8 +146,11 @@ private:
 	static constexpr GEngine::Color SNAKE_COLOR{ 0, 255, 0, 255 };
 	static constexpr GEngine::Color APPLE_COLOR{ 255, 0, 0, 255 };
 
-	static constexpr float TILE_SIZE = 20.0f;
-	static constexpr float PADDING = 2.0f;
+	static constexpr float TILE_SIZE = 15.0f;
+	static constexpr float PADDING = 1.5f;
+
+	static constexpr float offsetx = 350.0f;
+	static constexpr float offsety = 0.0f;
 
 	int round = 0;
 	int roundSteps = 0;
