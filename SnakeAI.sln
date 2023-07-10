@@ -8,7 +8,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SnakeAI", "SnakeAI\SnakeAI.
 		{13CE5447-2F12-48AB-BBA5-5A2698B95A37} = {13CE5447-2F12-48AB-BBA5-5A2698B95A37}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DeepQLearning", "DeepQLearning\DeepQLearning.vcxproj", "{13CE5447-2F12-48AB-BBA5-5A2698B95A37}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReinforcementLearning", "ReinforcementLearning\ReinforcementLearning.vcxproj", "{13CE5447-2F12-48AB-BBA5-5A2698B95A37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

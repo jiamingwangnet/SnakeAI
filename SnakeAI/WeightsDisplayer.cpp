@@ -7,13 +7,13 @@ WeightsDisplayer::WeightsDisplayer(GEngine::Game& game, const dqn::Agent& agent,
 
 void WeightsDisplayer::Init()
 {
-	const dqn::NeuralNet& net = agent.GetActionValueNet();
+	const net::NeuralNet& net = agent.GetActionValueNet();
 
 	size_t accumX = 0;
 
 	for ( size_t lindex = 1; lindex < net.GetLayers().size(); lindex++)
 	{
-		const std::unique_ptr<dqn::Layer>& layer = net.GetLayers()[lindex];
+		const std::unique_ptr<net::Layer>& layer = net.GetLayers()[lindex];
 
 		size_t input = net.GetLayers()[lindex-1]->GetNodes();
 		size_t weightY = layer->GetWeights().GetColumns();
@@ -61,14 +61,14 @@ void WeightsDisplayer::Init()
 #include <iostream>
 void WeightsDisplayer::Update()
 {
-	const dqn::NeuralNet& net = agent.GetActionValueNet();
+	const net::NeuralNet& net = agent.GetActionValueNet();
 
 	int l = 0;
 	for (size_t lindex = 1; lindex < net.GetLayers().size(); lindex++)
 	{
-		const std::unique_ptr<dqn::Layer>& layer = net.GetLayers()[lindex];
+		const std::unique_ptr<net::Layer>& layer = net.GetLayers()[lindex];
 
-		const dqn::DMatrix& inputs = net.GetLayers()[lindex - 1]->GetOutputs();
+		const net::DMatrix& inputs = net.GetLayers()[lindex - 1]->GetOutputs();
 		std::vector<Tile*>& tileVec = tiles[l];
 		
 		int i = 0;
@@ -95,7 +95,7 @@ void WeightsDisplayer::Update()
 			i++;
 		}
 
-		const dqn::DMatrix& weights = layer->GetWeights();
+		const net::DMatrix& weights = layer->GetWeights();
 		std::vector<Tile*>& wtileVec = tiles[++l];
 
 		i = 0;
@@ -125,7 +125,7 @@ void WeightsDisplayer::Update()
 		l++;
 	}
 
-	const dqn::DMatrix& inputs = net.GetLayers().back()->GetOutputs();
+	const net::DMatrix& inputs = net.GetLayers().back()->GetOutputs();
 	std::vector<Tile*>& tileVec = tiles.back();
 
 	int i = 0;

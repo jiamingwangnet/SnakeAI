@@ -1,9 +1,9 @@
 #pragma once
 
 #include <GEngine_v0.1/Game.h>
-#include <DeepQLearning/Agent.h>
+#include <ReinforcementLearning/Agent.h>
 #include "Board.h"
-#include <DeepQLearning/ActivationFuncs.h>
+#include <ReinforcementLearning/ActivationFuncs.h>
 #include <memory>
 #include "WeightsDisplayer.h"
 
@@ -23,11 +23,11 @@ private:
 	Board board;
 	WeightsDisplayer display;
 
-	dqn::ReLU relu;
-	dqn::Linear linear;
+	net::ReLU relu;
+	net::Linear linear;
 
 	std::vector<dqn::Agent::Action> actions;
-	std::vector<dqn::LayerInfo> layerInfo;
+	std::vector<net::LayerInfo> layerInfo;
 
 	dqn::Agent agent;
 	std::string name;

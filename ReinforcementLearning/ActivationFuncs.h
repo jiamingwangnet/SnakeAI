@@ -4,7 +4,7 @@
 #include <cmath>
 #include <memory>
 
-namespace dqn
+namespace net
 {
 	class Sigmoid : public Activation
 	{

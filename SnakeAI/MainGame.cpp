@@ -1,7 +1,7 @@
 #include "MainGame.h"
 #include "Camera.h"
 #include <iostream>
-#include <DeepQLearning/Utility.h>
+#include <ReinforcementLearning/Utility.h>
 
 static constexpr int DELAY = 1;
 static constexpr int VIEW_SIZE = 10;
@@ -83,7 +83,7 @@ void MainGame::Update()
 {
 	if (game.GetFrames() % DELAY == 0)
 	{
-		dqn::DMatrix state_0 = board.GetAgentState();
+		net::DMatrix state_0 = board.GetAgentState();
 
 		double prevScore = (double)board.GetScore();
 
@@ -93,7 +93,7 @@ void MainGame::Update()
 
 		display.Update();
 
-		dqn::DMatrix state_1 = board.GetAgentState();
+		net::DMatrix state_1 = board.GetAgentState();
 
 		if (board.GetState() == Board::State::LOSE)
 		{

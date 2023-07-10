@@ -6,7 +6,7 @@
 #include "Cost.h"
 #include <string>
 
-namespace dqn
+namespace net
 {
 	class NeuralNet
 	{

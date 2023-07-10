@@ -2,7 +2,7 @@
 
 #include "Cost.h"
 
-namespace dqn
+namespace net
 {
 	template<typename T>
 	class MSE : public Cost<T>

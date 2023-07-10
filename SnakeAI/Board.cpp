@@ -92,9 +92,9 @@ void Board::Update()
 	}
 }
 
-dqn::DMatrix Board::SampleBoard(int width, int height, int x, int y)
+net::DMatrix Board::SampleBoard(int width, int height, int x, int y)
 {
-	dqn::DMatrix res{ 1, (size_t)width * height };
+	net::DMatrix res{ 1, (size_t)width * height };
 
 	int cornerX = x - width / 2;
 	int cornerY = y - height / 2;
@@ -121,9 +121,9 @@ dqn::DMatrix Board::SampleBoard(int width, int height, int x, int y)
 	return res;
 }
 
-dqn::DMatrix Board::SampleBoard()
+net::DMatrix Board::SampleBoard()
 {
-	dqn::DMatrix res{ 1, (size_t)width * height };
+	net::DMatrix res{ 1, (size_t)width * height };
 
 	size_t i = 0;
 	for (Tile* tile : tiles)

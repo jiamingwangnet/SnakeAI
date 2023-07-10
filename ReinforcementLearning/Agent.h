@@ -17,15 +17,15 @@ namespace dqn
 	private:
 		struct ReplayData
 		{
-			DMatrix state_t; // neural network inputs
-			DMatrix action_t; // action index of the action list
+			net::DMatrix state_t; // neural network inputs
+			net::DMatrix action_t; // action index of the action list
 			double reward_t;
-			DMatrix state_next; // the resulting state
+			net::DMatrix state_next; // the resulting state
 			bool done; // is terminal
 		};
 
 	public:
-		Agent(const std::vector<Action>& actions, const std::vector<LayerInfo>& layerinfo, int replaySize, double epsilonDecay);
+		Agent(const std::vector<Action>& actions, const std::vector<net::LayerInfo>& layerinfo, int replaySize, double epsilonDecay);
 
 		void Load(std::string path, std::string name)// FIXME
 		{
@@ -77,15 +77,15 @@ namespace dqn
 			agentFile.close();
 		}
 
-		void SampleBegin(const DMatrix& state); // perform action
-		void SampleEnd(const DMatrix& newState, double reward, bool done); // observe reward
+		void SampleBegin(const net::DMatrix& state); // perform action
+		void SampleEnd(const net::DMatrix& newState, double reward, bool done); // observe reward
 
 		void Train();
 		void TrainBatch();
 
-		const NeuralNet& GetActionValueNet() const { return actionValueFunc; }
+		const net::NeuralNet& GetActionValueNet() const { return actionValueFunc; }
 	private:
-		void TakeAction(const DMatrix& state);
+		void TakeAction(const net::DMatrix& state);
 		void TakeAction(size_t index);
 
 	private:
@@ -103,11 +103,11 @@ namespace dqn
 
 		const std::vector<Action>& actions;
 
-		NeuralNet actionValueFunc;
-		NeuralNet targetActionValueFunc;
+		net::NeuralNet actionValueFunc;
+		net::NeuralNet targetActionValueFunc;
 
-		DMatrix lastAction;
-		DMatrix lastState;
+		net::DMatrix lastAction;
+		net::DMatrix lastState;
 
 		int steps = 0;
 	};

@@ -1,7 +1,7 @@
 #include <GEngine_v0.1/Game.h>
 #include "MainGame.h"
 #include <iostream>
-#include <DeepQLearning/Utility.h>
+#include <ReinforcementLearning/Utility.h>
 #include "Trainer.h"
 #include <conio.h>
 
@@ -15,7 +15,7 @@ bool isSafe(int x, int y)
 
 void Test()
 {
-	using namespace dqn;
+	using namespace net;
 
 	typedef NeuralNet::DataPoint DataPoint;
 

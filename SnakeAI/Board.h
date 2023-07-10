@@ -5,7 +5,7 @@
 #include "Snake.h"
 #include <GEngine_v0.1/Game.h>
 #include <random>
-#include <DeepQLearning/Matrix.h>
+#include <ReinforcementLearning/Matrix.h>
 #include <fstream>
 
 class Board
@@ -46,8 +46,8 @@ public:
 		//		walls/snake body = -1
 		//		apple            =  1
 		//      empty            =  0
-	dqn::DMatrix SampleBoard(int width, int height, int x, int y);
-	dqn::DMatrix SampleBoard();
+	net::DMatrix SampleBoard(int width, int height, int x, int y);
+	net::DMatrix SampleBoard();
 	const int& GetTravelledDistance() const { return travelledDistance; }
 
 	bool isCollide(int x, int y)
@@ -56,9 +56,9 @@ public:
 			tiles[y * width + x]->GetColor() == SNAKE_COLOR;
 	}
 	
-	dqn::DMatrix GetAgentState()
+	net::DMatrix GetAgentState()
 	{
-		dqn::DMatrix state{ 1, 11 };
+		net::DMatrix state{ 1, 11 };
 
 		int bodyx = snake.GetBody()[0].x;
 		int bodyy = snake.GetBody()[0].y;

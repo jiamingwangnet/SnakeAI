@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 
-namespace dqn
+namespace net
 {
 	class Util
 	{

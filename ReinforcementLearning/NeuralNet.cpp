@@ -8,7 +8,7 @@
 #define FILEOUT "debug.txt"
 #endif
 
-dqn::NeuralNet::NeuralNet(const std::vector<LayerInfo>& layerinfo)
+net::NeuralNet::NeuralNet(const std::vector<LayerInfo>& layerinfo)
 	: layerInfo{layerinfo}
 {
 	weightGrad.resize(layerInfo.size());
@@ -23,7 +23,7 @@ dqn::NeuralNet::NeuralNet(const std::vector<LayerInfo>& layerinfo)
 	ClearGradients();
 }
 
-dqn::DMatrix dqn::NeuralNet::CalculateOutputs(const DMatrix& input)
+net::DMatrix net::NeuralNet::CalculateOutputs(const DMatrix& input)
 {
 	DMatrix output;
 
@@ -41,7 +41,7 @@ dqn::DMatrix dqn::NeuralNet::CalculateOutputs(const DMatrix& input)
 	return output;
 }
 
-void dqn::NeuralNet::Save(std::string path) const
+void net::NeuralNet::Save(std::string path) const
 {
 	std::ofstream out{ path, std::ios::binary };
 	if (!out) std::cout << path + " could not be opened.";
@@ -65,7 +65,7 @@ void dqn::NeuralNet::Save(std::string path) const
 	out.close();
 }
 
-void dqn::NeuralNet::Load(std::string path) // FIXME
+void net::NeuralNet::Load(std::string path) // FIXME
 {
 	std::ifstream in{ path, std::ios::binary };
 	if (!in) std::cout << path + " could not be opened.";
@@ -93,7 +93,7 @@ void dqn::NeuralNet::Load(std::string path) // FIXME
 	in.close();
 }
 
-void dqn::NeuralNet::GradientDescent(double learningRate, DataPoint& dataPoint, const Cost<double>& cost)
+void net::NeuralNet::GradientDescent(double learningRate, DataPoint& dataPoint, const Cost<double>& cost)
 {
 	GetGradients(dataPoint, cost);
 
@@ -145,7 +145,7 @@ void dqn::NeuralNet::GradientDescent(double learningRate, DataPoint& dataPoint, 
 	ClearGradients();
 }
 
-void dqn::NeuralNet::GradientDescent(double learningRate, std::vector<DataPoint>& batch, const Cost<double>& cost)
+void net::NeuralNet::GradientDescent(double learningRate, std::vector<DataPoint>& batch, const Cost<double>& cost)
 {
 	for (DataPoint& dataPoint : batch)
 	{
@@ -200,7 +200,7 @@ void dqn::NeuralNet::GradientDescent(double learningRate, std::vector<DataPoint>
 	ClearGradients();
 }
 
-void dqn::NeuralNet::GetGradients(DataPoint& dataPoint, const Cost<double>& cost)
+void net::NeuralNet::GetGradients(DataPoint& dataPoint, const Cost<double>& cost)
 {
 	dataPoint.predicted = CalculateOutputs(dataPoint.input);
 
@@ -214,14 +214,14 @@ void dqn::NeuralNet::GetGradients(DataPoint& dataPoint, const Cost<double>& cost
 	}
 }
 
-dqn::DMatrix dqn::NeuralNet::OutputLayerValues(const DMatrix& costDerivative)
+net::DMatrix net::NeuralNet::OutputLayerValues(const DMatrix& costDerivative)
 {
 	return layers.back()->GetActivation()->
 		Derivative(layers.back()->GetWeightedInputs())
 		.Hadamard(costDerivative);
 }
 
-dqn::DMatrix dqn::NeuralNet::HiddenLayerValues(size_t layer_i, const DMatrix& nodeValues)
+net::DMatrix net::NeuralNet::HiddenLayerValues(size_t layer_i, const DMatrix& nodeValues)
 {
 	return (nodeValues * layers[layer_i + 1]->GetWeights().GetTransposed())
 			.Hadamard(
@@ -231,13 +231,13 @@ dqn::DMatrix dqn::NeuralNet::HiddenLayerValues(size_t layer_i, const DMatrix& no
 			));
 }
 
-void dqn::NeuralNet::UpdateGradients(size_t layer, const DMatrix& nodeValues)
+void net::NeuralNet::UpdateGradients(size_t layer, const DMatrix& nodeValues)
 {
 	weightGrad[layer] += layers[layer - 1]->GetOutputs().GetTransposed() * nodeValues;
 	biasGrad[layer] += nodeValues;
 }
 
-void dqn::NeuralNet::ClearGradients()
+void net::NeuralNet::ClearGradients()
 {
 	for (auto grad = weightGrad.begin(); grad != weightGrad.end(); ++grad)
 	{

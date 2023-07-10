@@ -1,7 +1,7 @@
 #include "Layer.h"
 #include "Utility.h"
 
-dqn::Layer::Layer(LayerInfo info)
+net::Layer::Layer(LayerInfo info)
 	: biases{1, info.nodes}, n_nodes{ info.nodes }, weights{ info.in_nodes, n_nodes }, activation{ info.activation }
 {
 	for (double& w : weights)
@@ -10,7 +10,7 @@ dqn::Layer::Layer(LayerInfo info)
 	}
 }
 
-dqn::DMatrix dqn::Layer::Forward(const DMatrix& input, bool start)
+net::DMatrix net::Layer::Forward(const DMatrix& input, bool start)
 {
 	if (start)
 	{
@@ -23,32 +23,32 @@ dqn::DMatrix dqn::Layer::Forward(const DMatrix& input, bool start)
 	return outputs;
 }
 
-const dqn::DMatrix& dqn::Layer::GetWeights() const
+const net::DMatrix& net::Layer::GetWeights() const
 {
 	return weights;
 }
 
-void dqn::Layer::SetWeights(const DMatrix& value)
+void net::Layer::SetWeights(const DMatrix& value)
 {
 	weights = value;
 }
 
-const dqn::DMatrix& dqn::Layer::GetBiases() const
+const net::DMatrix& net::Layer::GetBiases() const
 {
 	return biases;
 }
 
-void dqn::Layer::SetBiases(const DMatrix& value)
+void net::Layer::SetBiases(const DMatrix& value)
 {
 	biases = value;
 }
 
-const dqn::DMatrix& dqn::Layer::GetWeightedInputs() const
+const net::DMatrix& net::Layer::GetWeightedInputs() const
 {
 	return weightedInputs;
 }
 
-const dqn::DMatrix& dqn::Layer::GetOutputs() const
+const net::DMatrix& net::Layer::GetOutputs() const
 {
 	return outputs;
 }

@@ -4,7 +4,7 @@
 #include <iterator>
 #include <cassert>
 
-namespace dqn
+namespace net
 {
 	template<typename T>
 	class Matrix

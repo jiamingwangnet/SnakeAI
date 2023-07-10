@@ -3,7 +3,7 @@
 #include "Activation.h"
 #include <memory>
 
-namespace dqn
+namespace net
 {
 	struct LayerInfo
 	{

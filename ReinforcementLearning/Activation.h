@@ -3,7 +3,7 @@
 #include "Matrix.h"
 #include <memory>
 
-namespace dqn
+namespace net
 {
 	enum class ACTIVATION_TYPE
 	{

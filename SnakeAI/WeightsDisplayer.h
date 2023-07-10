@@ -1,6 +1,6 @@
 #pragma once
 
-#include <DeepQLearning/Agent.h>
+#include <ReinforcementLearning/Agent.h>
 #include "Tile.h"
 
 class WeightsDisplayer

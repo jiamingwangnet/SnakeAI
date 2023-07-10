@@ -2,7 +2,7 @@
 
 #include "Matrix.h"
 
-namespace dqn
+namespace net
 {
 	template<typename T>
 	class Cost

@@ -8,13 +8,15 @@
 #define FILEOUT "debug.txt"
 #endif
 
-dqn::Agent::Agent(const std::vector<Action>& actions, const std::vector<LayerInfo>& layerinfo, int replaySize, double epsilonDecay)
+dqn::Agent::Agent(const std::vector<Action>& actions, const std::vector<net::LayerInfo>& layerinfo, int replaySize, double epsilonDecay)
 	: actions{ actions }, actionValueFunc{ layerinfo }, targetActionValueFunc{ actionValueFunc }, epsilonDecay{ epsilonDecay }, replaySize{ replaySize }
 {
 }
 
-void dqn::Agent::SampleBegin(const DMatrix& state)
+void dqn::Agent::SampleBegin(const net::DMatrix& state)
 {
+	using namespace net;
+
 	lastState = state;
 
 	if (Util::RandomChance(epsilon))
@@ -27,8 +29,10 @@ void dqn::Agent::SampleBegin(const DMatrix& state)
 	}
 }
 
-void dqn::Agent::SampleEnd(const DMatrix& newState, double reward, bool done)
+void dqn::Agent::SampleEnd(const net::DMatrix& newState, double reward, bool done)
 {
+	using namespace net;
+
 	replays.emplace_back();
 	ReplayData& replay = replays.back();
 	replay.action_t = lastAction;
@@ -46,6 +50,8 @@ void dqn::Agent::SampleEnd(const DMatrix& newState, double reward, bool done)
 
 void dqn::Agent::Train()
 {
+	using namespace net;
+
 	steps++;
 
 	if (steps % LEARN_EVERY != 0) return;
@@ -83,8 +89,10 @@ void dqn::Agent::TrainBatch()
 	throw std::exception{ "Not Implemented" };
 }
 
-void dqn::Agent::TakeAction(const DMatrix& state)
+void dqn::Agent::TakeAction(const net::DMatrix& state)
 {
+	using namespace net;
+
 	lastAction = DMatrix{ 1, actions.size() };
 
 	DMatrix actionMat = actionValueFunc.CalculateOutputs(state);
@@ -97,6 +105,8 @@ void dqn::Agent::TakeAction(const DMatrix& state)
 
 void dqn::Agent::TakeAction(size_t index)
 {
+	using namespace net;
+
 	lastAction = DMatrix{ 1, actions.size() };
 
 	lastAction(0, index) = 1.0;
