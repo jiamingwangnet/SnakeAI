@@ -38,12 +38,12 @@ void Test()
 		data.push_back(dp);
 	}
 
-	Sigmoid sig;
+	std::shared_ptr<Sigmoid> sig = std::make_shared<Sigmoid>();
 
 	NeuralNet network{ {
-		{2, 0, &sig},
-		{3, 2, &sig},
-		{2, 3, &sig}
+		{2, 0, sig},
+		{3, 2, sig},
+		{2, 3, sig}
 		} };
 
 	NeuralNet net2{ network };
@@ -124,8 +124,8 @@ int main(int argc, char** argv)
 		[&mainGame]() { mainGame.Update(); },
 		[&mainGame]() { mainGame.Draw(); }
 	);
-
-	try
+	game.Run();
+	/*try
 	{
 		game.Run();
 	}
@@ -133,7 +133,7 @@ int main(int argc, char** argv)
 	{
 		std::cout << e.what() << std::endl;
 		std::cin.get();
-	}
+	}*/
 
 	return 0;
 }

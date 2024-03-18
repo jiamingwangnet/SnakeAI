@@ -1,4 +1,4 @@
-#include "Agent.h"
+#include "DQNAgent.h"
 #include "Utility.h"
 #include "CostFuncs.h"
 
@@ -8,12 +8,11 @@
 #define FILEOUT "debug.txt"
 #endif
 
-dqn::Agent::Agent(const std::vector<Action>& actions, const std::vector<net::LayerInfo>& layerinfo, int replaySize, double epsilonDecay)
-	: actions{ actions }, actionValueFunc{ layerinfo }, targetActionValueFunc{ actionValueFunc }, epsilonDecay{ epsilonDecay }, replaySize{ replaySize }
-{
-}
+dqn::DQNAgent::DQNAgent(const std::vector<Action>& actions, const std::vector<net::LayerInfo>& layerinfo, int replaySize, double epsilonDecay)
+	: Agent{actions}, actionValueFunc{layerinfo}, targetActionValueFunc{actionValueFunc}, epsilonDecay{epsilonDecay}, replaySize{replaySize}
+{}
 
-void dqn::Agent::SampleBegin(const net::DMatrix& state)
+void dqn::DQNAgent::SampleBegin(const net::DMatrix& state)
 {
 	using namespace net;
 
@@ -29,7 +28,7 @@ void dqn::Agent::SampleBegin(const net::DMatrix& state)
 	}
 }
 
-void dqn::Agent::SampleEnd(const net::DMatrix& newState, double reward, bool done)
+void dqn::DQNAgent::SampleEnd(const net::DMatrix& newState, double reward, bool done)
 {
 	using namespace net;
 
@@ -45,21 +44,16 @@ void dqn::Agent::SampleEnd(const net::DMatrix& newState, double reward, bool don
 	if (replays.size() > replaySize)
 		replays.pop_front();
 
-	if(steps % DECAY_DELAY == 0) epsilon *= epsilonDecay;
+	epsilon *= epsilonDecay;
 }
 
-void dqn::Agent::Train()
+void dqn::DQNAgent::Train()
 {
 	using namespace net;
 
 	steps++;
 
-	if (steps % LEARN_EVERY != 0) return;
-
 	const ReplayData& replay = replays[Util::Random<size_t>(std::uniform_int_distribution<size_t>(0, replays.size() - 1))];
-
-	NeuralNet::DataPoint data;
-	data.predicted = actionValueFunc.CalculateOutputs(replay.state_t);
 
 	DMatrix target = actionValueFunc.CalculateOutputs(replay.state_t);
 	DMatrix newVal = targetActionValueFunc.CalculateOutputs(replay.state_next);
@@ -71,11 +65,10 @@ void dqn::Agent::Train()
 
 	MSE<double> mse;
 	DMatrix output = actionValueFunc.CalculateOutputs(replay.state_t);
-	
-	data.input = replay.state_t;
-	data.expected = target;
-	
-	actionValueFunc.GradientDescent(0.001, data, mse);
+
+	DMatrix costGrad = mse.Derivative(output, target);
+
+	actionValueFunc.GradientDescent(0.001, costGrad);
 
 	if (steps % RESET_RATE == 0)
 	{
@@ -84,12 +77,12 @@ void dqn::Agent::Train()
 }
 
 
-void dqn::Agent::TrainBatch()
+void dqn::DQNAgent::TrainBatch()
 {
 	throw std::exception{ "Not Implemented" };
 }
 
-void dqn::Agent::TakeAction(const net::DMatrix& state)
+void dqn::DQNAgent::TakeAction(const net::DMatrix& state)
 {
 	using namespace net;
 
@@ -103,7 +96,7 @@ void dqn::Agent::TakeAction(const net::DMatrix& state)
 	actions[index]();
 }
 
-void dqn::Agent::TakeAction(size_t index)
+void dqn::DQNAgent::TakeAction(size_t index)
 {
 	using namespace net;
 

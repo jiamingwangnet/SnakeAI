@@ -93,9 +93,9 @@ void net::NeuralNet::Load(std::string path) // FIXME
 	in.close();
 }
 
-void net::NeuralNet::GradientDescent(double learningRate, DataPoint& dataPoint, const Cost<double>& cost)
+void net::NeuralNet::GradientDescent(double learningRate, const DMatrix& costGrad)
 {
-	GetGradients(dataPoint, cost);
+	GetGradients(costGrad);
 
 	for (size_t i = 1; i < layers.size(); i++)
 	{
@@ -145,11 +145,11 @@ void net::NeuralNet::GradientDescent(double learningRate, DataPoint& dataPoint, 
 	ClearGradients();
 }
 
-void net::NeuralNet::GradientDescent(double learningRate, std::vector<DataPoint>& batch, const Cost<double>& cost)
+void net::NeuralNet::GradientDescent(double learningRate, const std::vector<DMatrix>& costGrads)
 {
-	for (DataPoint& dataPoint : batch)
+	for (const DMatrix& costGrad : costGrads)
 	{
-		GetGradients(dataPoint, cost);
+		GetGradients(costGrad);
 	}
 
 	for (size_t i = 1; i < layers.size(); i++)
@@ -200,11 +200,9 @@ void net::NeuralNet::GradientDescent(double learningRate, std::vector<DataPoint>
 	ClearGradients();
 }
 
-void net::NeuralNet::GetGradients(DataPoint& dataPoint, const Cost<double>& cost)
+void net::NeuralNet::GetGradients(const DMatrix& costGrad)
 {
-	dataPoint.predicted = CalculateOutputs(dataPoint.input);
-
-	DMatrix nodeValues = OutputLayerValues(cost.Derivative(dataPoint.predicted, dataPoint.expected));
+	DMatrix nodeValues = OutputLayerValues(costGrad);
 	UpdateGradients(layers.size() - 1, nodeValues);
 
 	for (size_t i = layers.size() - 2; i > 0; --i)

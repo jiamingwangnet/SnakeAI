@@ -1,6 +1,7 @@
 #include "Trainer.h"
 #include <cmath>
 #include <ReinforcementLearning/CostFuncs.h>
+#include <stdexcept>
 
 Trainer::Trainer(std::vector<net::NeuralNet::DataPoint>& data, size_t batchSize, float trainPercent)
 {
@@ -42,8 +43,9 @@ Trainer::Trainer(std::vector<net::NeuralNet::DataPoint>& data, size_t batchSize,
 
 void Trainer::Train(net::NeuralNet& net, double learnRate, size_t index)
 {
-	net::MSE<double> mse;
-	net.GradientDescent(learnRate, trainBatches[index], mse);
+	throw std::logic_error{ "not implemented" };
+	/*net::MSE<double> mse;
+	net.GradientDescent(learnRate, trainBatches[index], mse);*/
 }
 
 const std::vector<std::vector<net::NeuralNet::DataPoint>>& Trainer::GetTrainBatches() const

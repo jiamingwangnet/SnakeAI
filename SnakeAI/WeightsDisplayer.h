@@ -1,17 +1,18 @@
 #pragma once
 
-#include <ReinforcementLearning/Agent.h>
+#include <ReinforcementLearning/DQNAgent.h>
 #include "Tile.h"
+#include <ReinforcementLearning/Agent.h>
 
 class WeightsDisplayer
 {
 public:
-	WeightsDisplayer(GEngine::Game& game, const dqn::Agent& agent, float x, float y, float tileSize);
+	WeightsDisplayer(GEngine::Game& game, net::Agent& agent, float x, float y, float tileSize);
 
 	void Init();
 	void Update();
 private:
-	const dqn::Agent& agent;
+	net::Agent& agent;
 	static constexpr float PADDING = 0.0f;
 	static constexpr double clmpMax = 1.0;
 	static constexpr double clmpMin = -1.0;

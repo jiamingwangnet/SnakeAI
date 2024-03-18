@@ -111,7 +111,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>D:\dev\dev\GLEW-2.1.0\glew-2.1.0\lib\Release\x64;D:\dev\dev\Side\C++\GEngine_v0.1\$(IntDir);D:\dev\dev\Side\C++\SnakeAI\$(IntDir);D:\dev\dev\SDL\SDL\VisualC\$(IntDir);$(SolutionDir)$(IntDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL3.lib;glew32.lib;opengl32.lib;GEngine_v0.1.lib;DeepQLearning.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL3.lib;glew32.lib;opengl32.lib;GEngine_v0.1.lib;ReinforcementLearning.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d "D:\dev\dev\SDL\SDL\VisualC\$(IntDir)SDL3.dll" "$(OutDir)"
@@ -135,7 +135,7 @@ xcopy /y /d "D:\dev\dev\GLEW-2.1.0\glew-2.1.0\bin\Release\x64\glew32.dll" "$(Out
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>D:\dev\dev\GLEW-2.1.0\glew-2.1.0\lib\Release\x64;D:\dev\dev\Side\C++\GEngine_v0.1\$(IntDir);D:\dev\dev\Side\C++\SnakeAI\$(IntDir);D:\dev\dev\SDL\SDL\VisualC\$(IntDir);$(SolutionDir)$(IntDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL3.lib;glew32.lib;opengl32.lib;GEngine_v0.1.lib;DeepQLearning.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL3.lib;glew32.lib;opengl32.lib;GEngine_v0.1.lib;ReinforcementLearning.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d "D:\dev\dev\SDL\SDL\VisualC\$(IntDir)SDL3.dll" "$(OutDir)"

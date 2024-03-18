@@ -1,13 +1,13 @@
 #include "WeightsDisplayer.h"
 #include <GEngine_v0.1/Game.h>
 
-WeightsDisplayer::WeightsDisplayer(GEngine::Game& game, const dqn::Agent& agent, float x, float y, float tileSize)
+WeightsDisplayer::WeightsDisplayer(GEngine::Game& game, net::Agent& agent, float x, float y, float tileSize)
 	: agent{agent}, x{x}, y{y}, tileSize{tileSize}, game{game}
 {}
 
 void WeightsDisplayer::Init()
 {
-	const net::NeuralNet& net = agent.GetActionValueNet();
+	net::NeuralNet& net = agent.GetMainNet();
 
 	size_t accumX = 0;
 
@@ -58,10 +58,10 @@ void WeightsDisplayer::Init()
 	}
 	tiles.push_back(inputVec);
 }
-#include <iostream>
+
 void WeightsDisplayer::Update()
 {
-	const net::NeuralNet& net = agent.GetActionValueNet();
+	net::NeuralNet& net = agent.GetMainNet();
 
 	int l = 0;
 	for (size_t lindex = 1; lindex < net.GetLayers().size(); lindex++)

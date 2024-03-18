@@ -55,12 +55,17 @@ MainGame::MainGame(GEngine::Game& game)
 		},
 	},
 	layerInfo{
-		{ 11,     0, &relu},
-		{ 256,   11, &relu},
-		{ 128,  256, &relu},
-		{   3,  128, &linear}
+		{ 11,     0, relu},
+		{ 256,   11, relu},
+		{ 128,  256, relu},
+		{   3,  128, linear}
 	},
-	agent{actions, layerInfo, 100000, 0.9998}, display{ game, agent, -620.0f, -250.0f, 2.0f }
+#ifdef PPO
+	agent{actions, layerInfo, 100000}
+#else
+	agent{actions, layerInfo, 100000, 0.9998}
+#endif
+	, display{ game, agent, -620.0f, -250.0f, 2.0f }
 {
 	
 }

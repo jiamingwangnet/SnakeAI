@@ -3,13 +3,17 @@
 #include "Activation.h"
 #include <memory>
 
+
+/*
+	When using the wrong weighted outputs and inputs, performing gradient descent will result in -nan(ind)
+*/
 namespace net
 {
 	struct LayerInfo
 	{
 		size_t nodes;
 		size_t in_nodes;
-		Activation* activation;
+		std::shared_ptr<Activation> activation;
 	};
 
 	class Layer
@@ -28,8 +32,20 @@ namespace net
 
 		const DMatrix& GetWeightedInputs() const;
 		const DMatrix& GetOutputs() const;
+		
+		// for gradient descent
+		void SetWeightedInputs(const DMatrix& val)
+		{
+			weightedInputs = val;
+		}
 
-		Activation* GetActivation() const { return activation; }
+		void SetOutputs(const DMatrix& val)
+		{
+			outputs = val;
+		}
+
+		std::shared_ptr<Activation> GetActivation() const { return activation; }
+		void SetActivation(std::shared_ptr<Activation>& activation) { this->activation = activation; }
 		size_t GetNodes() const { return n_nodes; }
 	private:
 		static constexpr double WEIGHT_MIN = -1.0;
@@ -40,7 +56,7 @@ namespace net
 		DMatrix biases;
 		DMatrix weightedInputs{};
 		DMatrix outputs{};
-		Activation* activation;
+		std::shared_ptr<Activation> activation;
 	};
 }
 

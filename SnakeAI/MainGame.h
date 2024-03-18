@@ -1,11 +1,14 @@
 #pragma once
 
 #include <GEngine_v0.1/Game.h>
-#include <ReinforcementLearning/Agent.h>
+#include <ReinforcementLearning/DQNAgent.h>
 #include "Board.h"
 #include <ReinforcementLearning/ActivationFuncs.h>
 #include <memory>
 #include "WeightsDisplayer.h"
+#include <ReinforcementLearning/PPOAgent.h>
+
+#define PPO
 
 class MainGame
 {
@@ -23,12 +26,17 @@ private:
 	Board board;
 	WeightsDisplayer display;
 
-	net::ReLU relu;
-	net::Linear linear;
+	std::shared_ptr<net::ReLU> relu = std::make_shared<net::ReLU>();
+	std::shared_ptr<net::Linear> linear = std::make_shared<net::Linear>();
 
-	std::vector<dqn::Agent::Action> actions;
+	std::vector<net::Agent::Action> actions;
+
 	std::vector<net::LayerInfo> layerInfo;
 
-	dqn::Agent agent;
+#ifdef PPO
+	ppo::PPOAgent agent;
+#else
+	dqn::DQNAgent agent;
+#endif
 	std::string name;
 };

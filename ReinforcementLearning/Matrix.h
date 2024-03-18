@@ -13,6 +13,11 @@ namespace net
 		Matrix(std::vector<T> values, size_t rows, size_t columns, T init = 0);
 		Matrix(size_t rows, size_t columns, T init = 0);
 		Matrix();
+
+		explicit operator std::vector<T>() const
+		{
+			return values;
+		}
 	public:
 		typename std::vector<T>::iterator begin(); // typename is there because the type of the iterator is unknown.
 		typename std::vector<T>::iterator end();

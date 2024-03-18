@@ -8,13 +8,13 @@
 #include <fstream>
 #include <iostream>
 
-namespace dqn
+namespace net
 {
 	class Agent
 	{
 	public:
 		using Action = std::function<void(void)>;
-	private:
+	protected:
 		struct ReplayData
 		{
 			net::DMatrix state_t; // neural network inputs
@@ -25,86 +25,25 @@ namespace dqn
 		};
 
 	public:
-		Agent(const std::vector<Action>& actions, const std::vector<net::LayerInfo>& layerinfo, int replaySize, double epsilonDecay);
+		Agent(const std::vector<Action>& actions)
+			: actions{actions}
+		{}
 
-		void Load(std::string path, std::string name)// FIXME
-		{
-			actionValueFunc.Load(path + name + ".actvalue");
-			targetActionValueFunc.Load(path + name + ".targvalue");
+		virtual void SampleBegin(const net::DMatrix& state) = 0; // perform action
+		virtual void SampleEnd(const net::DMatrix& newState, double reward, bool done) = 0; // observe reward
 
-			std::ifstream agentFile{ name + ".agtvalue", std::ios::binary };
-			if (!agentFile) std::cout << name + ".agtvalue could not be opened.";
+		virtual void Train() = 0;
+		virtual void TrainBatch() = 0;
+		virtual net::NeuralNet& GetMainNet() = 0;
 
-			agentFile.read(reinterpret_cast<char*>(&epsilon), sizeof(epsilon));
-			agentFile.read(reinterpret_cast<char*>(&steps), sizeof(steps));
+		virtual void Save(std::string path, std::string name) = 0;
+		virtual void Load(std::string path, std::string name) = 0;
+	protected:
+		virtual void TakeAction(const net::DMatrix& state) = 0;
+		virtual void TakeAction(size_t index) = 0;
 
-			/*size_t replaySize;
-			agentFile.read(reinterpret_cast<char*>(&replaySize), sizeof(replaySize));
-			replays.resize(replaySize);
-
-			for (ReplayData& replay : replays)
-			{
-				agentFile.read(reinterpret_cast<char*>(&replay.action_t), sizeof(replay.action_t));
-				agentFile.read(reinterpret_cast<char*>(&replay.done), sizeof(replay.done));
-				agentFile.read(reinterpret_cast<char*>(&replay.reward_t), sizeof(replay.reward_t));
-				agentFile.read(reinterpret_cast<char*>(&replay.state_next), sizeof(replay.state_next));
-				agentFile.read(reinterpret_cast<char*>(&replay.state_t), sizeof(replay.state_t));
-			}*/
-
-			agentFile.close();
-		}
-		void Save(std::string path, std::string name)// FIXME
-		{
-			actionValueFunc.Save(path + name + ".actvalue");
-			targetActionValueFunc.Save(path + name + ".targvalue");
-			std::ofstream agentFile{ name + ".agtvalue", std::ios::binary };
-
-			agentFile.write(reinterpret_cast<const char*>(&epsilon), sizeof(epsilon));
-			agentFile.write(reinterpret_cast<const char*>(&steps), sizeof(steps));
-
-			/*size_t replaySize = replays.size();
-			agentFile.write(reinterpret_cast<const char*>(&replaySize), sizeof(replaySize));
-
-			for (const ReplayData& replay : replays)
-			{
-				agentFile.write(reinterpret_cast<const char*>(&replay.action_t  ), sizeof(replay.action_t  ));
-				agentFile.write(reinterpret_cast<const char*>(&replay.done	    ), sizeof(replay.done	   ));
-				agentFile.write(reinterpret_cast<const char*>(&replay.reward_t  ), sizeof(replay.reward_t  ));
-				agentFile.write(reinterpret_cast<const char*>(&replay.state_next), sizeof(replay.state_next));
-				agentFile.write(reinterpret_cast<const char*>(&replay.state_t   ), sizeof(replay.state_t   ));
-			}*/
-
-			agentFile.close();
-		}
-
-		void SampleBegin(const net::DMatrix& state); // perform action
-		void SampleEnd(const net::DMatrix& newState, double reward, bool done); // observe reward
-
-		void Train();
-		void TrainBatch();
-
-		const net::NeuralNet& GetActionValueNet() const { return actionValueFunc; }
-	private:
-		void TakeAction(const net::DMatrix& state);
-		void TakeAction(size_t index);
-
-	private:
-		static constexpr int RESET_RATE = 500;
-		static constexpr int DECAY_DELAY = 1;
-		static constexpr int LEARN_EVERY = 1;
-		static constexpr int BATCH_SIZE = 100;
-
-		const double epsilonDecay; // 0.999994
-		double epsilon = 1.0;
-		double discount = 0.9;
-
-		std::deque<ReplayData> replays;
-		int replaySize;
-
+	protected:
 		const std::vector<Action>& actions;
-
-		net::NeuralNet actionValueFunc;
-		net::NeuralNet targetActionValueFunc;
 
 		net::DMatrix lastAction;
 		net::DMatrix lastState;
