@@ -6,8 +6,6 @@
 static constexpr int DELAY = 1;
 static constexpr int VIEW_SIZE = 10;
 
-#undef PPO
-
 MainGame::MainGame(GEngine::Game& game)
 	: game{ game }, board{ game, 32, 24, 3, DELAY }, 
 	actions{

@@ -8,8 +8,6 @@
 #include "WeightsDisplayer.h"
 #include <ReinforcementLearning/PPOAgent.h>
 
-#define PPO
-
 class MainGame
 {
 public:
