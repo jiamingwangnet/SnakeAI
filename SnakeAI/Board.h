@@ -66,9 +66,9 @@ public:
 		int foodx = applePos.x;
 		int foody = applePos.y;
 
-		GEngine::Vector2 next_n{ snake.GetBody()[0].x, snake.GetBody()[0].y - 1 };
+		GEngine::Vector2 next_n{ snake.GetBody()[0].x, snake.GetBody()[0].y + 1 };
 		GEngine::Vector2 next_e{ snake.GetBody()[0].x + 1, snake.GetBody()[0].y };
-		GEngine::Vector2 next_s{ snake.GetBody()[0].x, snake.GetBody()[0].y + 1 };
+		GEngine::Vector2 next_s{ snake.GetBody()[0].x, snake.GetBody()[0].y - 1 };
 		GEngine::Vector2 next_w{ snake.GetBody()[0].x - 1, snake.GetBody()[0].y };
 
 		bool dir_n = snake.GetHeading() == Snake::NORTH;
