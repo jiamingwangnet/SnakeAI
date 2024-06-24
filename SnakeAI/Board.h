@@ -103,8 +103,8 @@ public:
 		// food pos
 		state(0, 7)  = (double)(foodx < bodyx); // west
 		state(0, 8)  = (double)(foodx > bodyx); // east
-		state(0, 9)  = (double)(foody < bodyy); // north
-		state(0, 10) = (double)(foody > bodyy); // south
+		state(0, 9)  = (double)(foody < bodyy); // south
+		state(0, 10) = (double)(foody > bodyy); // north
 
 		return state;
 	}
