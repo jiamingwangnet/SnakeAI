@@ -5,9 +5,10 @@
 
 static constexpr int DELAY = 1;
 static constexpr int VIEW_SIZE = 10;
+static constexpr int SNAKE_LEN = 3;
 
 MainGame::MainGame(GEngine::Game& game)
-	: game{ game }, board{ game, 32, 24, 3, DELAY }, 
+	: game{ game }, board{ game, 32, 24, SNAKE_LEN, DELAY },
 	actions{
 		// straight
 		[this]() {
