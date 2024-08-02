@@ -1,7 +1,10 @@
 #include "Board.h"
 
+#define WIDTH width / 2
+#define HEIGHT height / 2
+
 Board::Board(GEngine::Game& game, int width, int height, int snakeLen, int delay)
-	: snake{snakeLen, width / 2, height / 2 }, delay{delay}, game{game}, width{width}, height{height}, rng{rd()}, defaultState{}
+	: snake{snakeLen, 0,  HEIGHT}, delay{delay}, game{game}, width{width}, height{height}, rng{rd()}, defaultState{}
 {
 	defaultState.delay = delay;
 	defaultState.width = width;
@@ -153,7 +156,7 @@ void Board::Reset()
 	travelledDistance = 0;
 	roundSteps = 0;
 	score = 0;
-	snake = Snake{ defaultState.snakeLen, width / 2, height / 2 };
+	snake = Snake{ defaultState.snakeLen, 0, HEIGHT };
 
 	for (int y = 0; y < height; y++)
 	{
