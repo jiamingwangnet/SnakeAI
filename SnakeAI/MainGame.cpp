@@ -2,13 +2,10 @@
 #include "Camera.h"
 #include <iostream>
 #include <ReinforcementLearning/Utility.h>
-
-static constexpr int DELAY = 1;
-static constexpr int VIEW_SIZE = 10;
-static constexpr int SNAKE_LEN = 30;
+#include "Settings.h"
 
 MainGame::MainGame(GEngine::Game& game)
-	: game{ game }, board{ game, 32, 24, SNAKE_LEN, DELAY },
+	: game{ game }, board{ game, 32, 24, SNAKE_START_LENGTH, UPDATE_DELAY },
 	actions{
 		// straight
 		[this]() {
@@ -56,16 +53,10 @@ MainGame::MainGame(GEngine::Game& game)
 		},
 	},
 	layerInfo{
-		{ 11,     0, relu},
-		{ 256,   11, relu},
-		{ 128,  256, relu},
-		{   3,  128, linear}
+		LAYER_INFO
 	},
-#ifdef PPO
-	agent{actions, layerInfo, 100000}
-#else
-	agent{actions, layerInfo, 100000, 0.9998}
-#endif
+
+	agent{actions, layerInfo, REPLAY_SIZE,EPSILON_DECAY_FACTOR}
 	, display{ game, agent, -620.0f, -250.0f, 2.0f }
 {
 	
@@ -87,7 +78,7 @@ void MainGame::Init()
 
 void MainGame::Update()
 {
-	if (game.GetFrames() % DELAY == 0)
+	if (game.GetFrames() % UPDATE_DELAY == 0)
 	{
 		net::DMatrix state_0 = board.GetAgentState();
 
@@ -116,11 +107,8 @@ void MainGame::Update()
 		{
 			agent.Save("", name);
 		}
-
-		
 	}
 	
-
 	if (board.GetState() == Board::State::LOSE)
 	{
 		board.Reset();

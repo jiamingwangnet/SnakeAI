@@ -6,7 +6,6 @@
 #include <ReinforcementLearning/ActivationFuncs.h>
 #include <memory>
 #include "WeightsDisplayer.h"
-#include <ReinforcementLearning/PPOAgent.h>
 
 class MainGame
 {
@@ -26,15 +25,14 @@ private:
 
 	std::shared_ptr<net::ReLU> relu = std::make_shared<net::ReLU>();
 	std::shared_ptr<net::Linear> linear = std::make_shared<net::Linear>();
+	std::shared_ptr<net::Sigmoid> sigmoid = std::make_shared<net::Sigmoid>();
+	std::shared_ptr<net::Softmax> softmax = std::make_shared<net::Softmax>();
 
 	std::vector<net::Agent::Action> actions;
 
 	std::vector<net::LayerInfo> layerInfo;
 
-#ifdef PPO
-	ppo::PPOAgent agent;
-#else
 	dqn::DQNAgent agent;
-#endif
+
 	std::string name;
 };

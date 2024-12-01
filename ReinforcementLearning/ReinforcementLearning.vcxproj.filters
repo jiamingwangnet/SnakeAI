@@ -42,9 +42,6 @@
     <ClInclude Include="CostFuncs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PPOAgent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DQNAgent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -54,9 +51,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Layer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PPOAgent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DQNAgent.cpp">

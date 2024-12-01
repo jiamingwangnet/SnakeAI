@@ -1,7 +1,7 @@
 #include "Snake.h"
 
 Snake::Snake(int length, int x, int y)
-	: body{ length }, heading{ EAST }
+	: body( length ), heading{ EAST }
 {
 	for (Section& section : body)
 	{

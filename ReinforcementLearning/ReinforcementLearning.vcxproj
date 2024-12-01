@@ -138,14 +138,12 @@
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="NeuralNet.h" />
     <ClInclude Include="Agent.h" />
-    <ClInclude Include="PPOAgent.h" />
     <ClInclude Include="Utility.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DQNAgent.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="NeuralNet.cpp" />
-    <ClCompile Include="PPOAgent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
